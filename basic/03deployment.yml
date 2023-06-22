@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy
+  labels:
+    name: my-deploy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      apptype: web-backend
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        apptype: web-backend
+    spec:
+      containers:
+        - name: my-app
+          image: javabyraghu/maven-web-app
+          ports:
+            - containerPort: 8080

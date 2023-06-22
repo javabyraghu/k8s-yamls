@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-rs
+  labels:
+    name: my-rs
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      apptype: web-backend
+  template:
+    metadata:
+      labels:
+        apptype: web-backend
+    spec:
+      containers:
+      - name: my-app
+        image: javabyraghu/maven-web-app
+        ports:  
+          - containerPort: 8080
