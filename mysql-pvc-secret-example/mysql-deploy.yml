@@ -12,23 +12,21 @@ spec:
       labels:
         app: mysql
     spec:
-      volumes:
-        - name: mysql-storage
-          persistentVolumeClaim:
-            claimName: mysql-pvc
       containers:
         - name: mysql
           image: mysql:latest
           env:
             - name: MYSQL_ROOT_PASSWORD
-              valueFrom: 
+              valueFrom:
                 secretKeyRef:
                   name: mysql-secret
-                  key: MYSQL_ROOT_PASSWORD
+                  key: password
           ports:
             - containerPort: 3306
-              name: mysql
           volumeMounts:
-            - name: mysql-storage
+            - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
-              
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pvc
